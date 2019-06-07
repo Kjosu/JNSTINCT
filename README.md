@@ -4,6 +4,11 @@ Java implementation of the Neat/Instinct algorithm.
 
 Easy to use for nearly every purpose.
 
+## FEATURES
+
+- Implement your own mutations
+- Implement the selection algorithm you want
+
 ## USAGE
 
 1. Create your Genome instance
@@ -63,7 +68,7 @@ class XORNeat extends SpeciationNeat<XORGenome> {
 }
 ```
 
-3. Evolve your network
+4. Setup your network and evolve it
 
 ```java
 private static final int generations = 1000;
@@ -78,4 +83,95 @@ public static void main(String[] args) {
   XORGenome fittest = neat.getFittestGenome();
   ...
 }
+```
+
+## Network settings
+
+```java
+Neat.mutations = new Mutation[] {   // Allowed Mutations
+  neat.addNode,
+  neat.subNode,
+  neat.addConnection,
+  neat.subConnection,
+  neat.modifyWeight,
+  neat.modifyBias,
+  neat.modifySquash,
+  ...
+}
+
+Neat.selection = new FitnessProportionateSelection(); // default
+
+Neat.equal = false; // default
+Neat.clear = false; // default
+Neat.elitism = 0;   // default
+Neat.mutationRate = .3; // default
+Neat.mutationAmount = 1; // default
+Neat.growth = 1; // default
+Neat.maxNodes = 0; // infinite // default
+Neat.maxConnections = 0; // infinite // default
+Neat.maxGates = 0; // infinite // default
+
+SpeciationNeat.excessCoefficient = 1D; // default
+SpeciationNeat.disjointCoefficient = 1D; // default
+SpeciationNeat.weightCoefficient = 1D; // default
+SpeciationNeat.compatibilityThreshold = 3D; // default
+SpeciationNeat.weakEliminatePercentage = .2D; // default
+SpeciationNeat.maxStaleness = 20; // default
+
+```
+
+## CUSTOM MUTATIONS
+
+Every mutation i already implemented is part of a network.
+
+```java
+Neat.addBackConnection
+Neat.subBackConnection
+Neat.addNode
+Neat.subNode
+Neat.addConnection
+Neat.subConnection
+Neat.addGate
+Neat.subGate
+Neat.addSelfConnection
+Neat.subSelfConnection
+Neat.modifyWeight
+Neat.modifyBias
+Neat.modifySquash
+Neat.swapNodes
+```
+
+Create your own mutation
+
+```java
+class CustomMutation implements Mutation {
+
+  @Override
+  public <T extends Genome<T>> void mutate(Neat<T> neat, T genome) {
+    ...
+  }
+}
+
+
+// Set allowed mutations
+Neat.mutations = new Mutation[] {
+  new CustomMutation(),
+  Neat.addNode,
+  Neat.subNode
+}
+```
+
+## CUSTOM SELECTION
+
+```java
+class CustomSelection implements Selection {
+
+  @Override
+  public <T extends Genome<T>> T select(Neat<T> neat) {
+    return ...
+  }
+}
+
+
+Neat.selection = new CustomSelection();
 ```
