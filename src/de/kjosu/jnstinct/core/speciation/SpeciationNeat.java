@@ -58,10 +58,7 @@ public abstract class SpeciationNeat<T extends Genome<T>> extends Neat<T> {
         final List<T> elitists = new Stack<>();
 
         for (int i = 0; i < elitism && i < population.size(); i++) {
-		T elitist = population.get(i);
-		elitist.setFitness(0);
-		
-        	elitists.add(elitist);
+        	elitists.add(population.get(i));
         }
 
         if (offsprings.isEmpty()) {
@@ -80,6 +77,10 @@ public abstract class SpeciationNeat<T extends Genome<T>> extends Neat<T> {
 
         mutate();
 
+	for (T genome : elitists) {
+		genome.setFitness(0);
+	}
+	    
         population.addAll(elitists);
 
         generation++;
