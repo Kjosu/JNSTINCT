@@ -30,7 +30,6 @@ public abstract class Neat<T extends Genome<T>> {
 
 	protected final ThreadLocalRandom random = ThreadLocalRandom.current();
 
-	public final AddBackConnectionMutation addBackConnection = new AddBackConnectionMutation();
 	public final AddConnectionMutation addConnection = new AddConnectionMutation();
 	public final AddGateMutation addGate = new AddGateMutation();
 	public final AddNodeMutation addNode = new AddNodeMutation();
@@ -38,7 +37,6 @@ public abstract class Neat<T extends Genome<T>> {
 	public final ModifyBiasMutation modifyBias = new ModifyBiasMutation();
 	public final ModifySquashMutation modifySquash = new ModifySquashMutation();
 	public final ModifyWeightMutation modifyWeight = new ModifyWeightMutation();
-	public final SubBackConnectionMutation subBackConnection = new SubBackConnectionMutation();
 	public final SubConnectionMutation subConnection = new SubConnectionMutation();
 	public final SubGateMutation subGate = new SubGateMutation();
 	public final SubNodeMutation subNode = new SubNodeMutation();
