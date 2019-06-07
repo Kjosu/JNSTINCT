@@ -1,5 +1,7 @@
 package de.kjosu.jnstinct.core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +45,7 @@ public abstract class Neat<T extends Genome<T>> {
 	public final SubSelfConnectionMutation subSelfConnection = new SubSelfConnectionMutation();
 	public final SwapNodesMutation swapNodes = new SwapNodesMutation();
 
-	public Mutation[] mutations = new Mutation[] {
+	public List<Mutation> mutations = new ArrayList<>(Arrays.asList(new Mutation[] {
 		addNode,
 		subNode,
 		addConnection,
@@ -56,7 +58,7 @@ public abstract class Neat<T extends Genome<T>> {
 		modifyBias,
 		modifySquash,
 		swapNodes
-	};
+	}));
 
 	public Selection selection = new FitnessProportionateSelection();
 
@@ -126,7 +128,7 @@ public abstract class Neat<T extends Genome<T>> {
 	}
 
 	public Mutation selectMutationMethod(final T genome) {
-		final Mutation method = mutations[random.nextInt(mutations.length)];
+		final Mutation method = mutations.get(random.nextInt(mutations.size()));
 
 		if (maxNodes > 0 && method instanceof AddNodeMutation && genome.getNodeSize() >= maxNodes) {
 			return null;
