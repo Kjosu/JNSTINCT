@@ -126,8 +126,6 @@ SpeciationNeat.maxStaleness = 20; // default
 Every mutation i already implemented is part of a network.
 
 ```java
-Neat.addBackConnection
-Neat.subBackConnection
 Neat.addNode
 Neat.subNode
 Neat.addConnection
