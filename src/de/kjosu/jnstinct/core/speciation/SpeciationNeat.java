@@ -76,10 +76,6 @@ public abstract class SpeciationNeat<T extends Genome<T>> extends Neat<T> {
         population.addAll(offsprings);
 
         mutate();
-
-	for (T genome : elitists) {
-		genome.setFitness(0);
-	}
 	    
         population.addAll(elitists);
 
