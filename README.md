@@ -6,8 +6,9 @@ Easy to use for nearly every purpose.
 
 ## FEATURES
 
-- Implement your own mutations
-- Implement the selection algorithm you want
+- Custom evolve function
+- Custom mutations
+- Custom selection algorithms
 
 ## USAGE
 
