@@ -12,7 +12,7 @@ Easy to use for nearly every purpose.
 
 ## USAGE
 
-1. Create your Genome instance
+1. Create your Genome instance (You need both constructors)
 
 ```java
 class XORGenome extends Genome<XORGenome> {
