@@ -10,7 +10,6 @@ import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
 import de.kjosu.jnstinct.core.NodeGene.NodeType;
-import de.kjosu.jnstinct.mutation.AddBackConnectionMutation;
 import de.kjosu.jnstinct.mutation.AddConnectionMutation;
 import de.kjosu.jnstinct.mutation.AddGateMutation;
 import de.kjosu.jnstinct.mutation.AddNodeMutation;
@@ -19,7 +18,6 @@ import de.kjosu.jnstinct.mutation.ModifyBiasMutation;
 import de.kjosu.jnstinct.mutation.ModifySquashMutation;
 import de.kjosu.jnstinct.mutation.ModifyWeightMutation;
 import de.kjosu.jnstinct.mutation.Mutation;
-import de.kjosu.jnstinct.mutation.SubBackConnectionMutation;
 import de.kjosu.jnstinct.mutation.SubConnectionMutation;
 import de.kjosu.jnstinct.mutation.SubGateMutation;
 import de.kjosu.jnstinct.mutation.SubNodeMutation;
