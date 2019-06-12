@@ -89,7 +89,7 @@ public static void main(String[] args) {
 ## Network settings
 
 ```java
-Neat.mutations = new Mutation[] {   // Allowed Mutations
+Neat.mutations.addAll(      // Allowed Mutations
   neat.addNode,
   neat.subNode,
   neat.addConnection,
@@ -98,7 +98,7 @@ Neat.mutations = new Mutation[] {   // Allowed Mutations
   neat.modifyBias,
   neat.modifySquash,
   ...
-}
+);
 
 Neat.selection = new FitnessProportionateSelection(); // default
 
@@ -152,12 +152,12 @@ class CustomMutation implements Mutation {
 }
 
 
-// Set allowed mutations
-Neat.mutations = new Mutation[] {
+// Add allowed mutations
+Neat.mutations.addAll(
   new CustomMutation(),
   Neat.addNode,
   Neat.subNode
-}
+);
 ```
 
 ## CUSTOM SELECTION
