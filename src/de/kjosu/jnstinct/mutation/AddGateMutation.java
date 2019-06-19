@@ -28,10 +28,7 @@ public class AddGateMutation implements Mutation {
 			return;
 		}
 
-		final int origin = g.getInputSize();
-		final int bound = g.getNodeSize();
-
-		final NodeGene node = MapUtils.randomValue(g.getNodes(), origin, bound);
+		final NodeGene node = MapUtils.randomValue(g.getNodes());
 		final ConnectionGene c = possible.get(random.nextInt(possible.size()));
 
 		g.gate(node, c);

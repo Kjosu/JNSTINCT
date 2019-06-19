@@ -13,7 +13,7 @@ public class SubGateMutation implements Mutation {
 			return;
 		}
 
-		final ConnectionGene c = MapUtils.randomValue(g.getGates());
+		final ConnectionGene c = MapUtils.randomKey(g.getGates());
 		g.ungate(c);
 	}
 

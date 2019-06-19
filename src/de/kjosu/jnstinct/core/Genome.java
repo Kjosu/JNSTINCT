@@ -23,7 +23,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 
 	private final Map<Integer, NodeGene> nodes = new TreeMap<>();
 	private final Map<Integer, ConnectionGene> connections = new HashMap<>();
-	private final Map<Integer, ConnectionGene> gates = new HashMap<>();
+	private final Map<ConnectionGene, Integer> gates = new HashMap<>();
 	private final Map<Integer, ConnectionGene> selfs = new HashMap<>();
 
 	private int staleness;
@@ -242,9 +242,9 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		node.activate();
 
 		for (final int id : node.getGates()) {
-			final ConnectionGene c = gates.get(id);
+			final ConnectionGene c = getConnection(id);
 
-			if (!c.isEnabled()) {
+			if (c == null || !c.isEnabled()) {
 				continue;
 			}
 
@@ -337,7 +337,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		node.addGate(connection.getId());
 		connection.setGaterNode(node.getId());
 
-		gates.put(connection.getId(), connection);
+		gates.put(connection, node.getId());
 	}
 
 	public void ungate(final ConnectionGene c) {
@@ -345,11 +345,9 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			throw new IllegalArgumentException("Connection can't be null");
 		}
 
-		if (!gates.containsKey(c.getId())) {
-			throw new IllegalArgumentException("Connection is not gated");
+		if (c.getGaterNode() == -1) {
+			return;
 		}
-
-		gates.remove(c.getId());
 
 		final NodeGene node = nodes.get(c.getGaterNode());
 
@@ -360,6 +358,8 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		node.removeGate(c.getId());
 		c.setGaterNode(-1);
 		c.setGain(1);
+
+		gates.remove(c);
 	}
 
 	public void removeNode(final int id) {
@@ -427,7 +427,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		}
 
 		for (int i = node.getGates().size() - 1; i >= 0; i--) {
-			final ConnectionGene c = gates.get(node.getGates().get(i));
+			final ConnectionGene c = getConnection(node.getGates().get(i));
 			ungate(c);
 		}
 
@@ -460,7 +460,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		}
 
 		for (final int id : node.getGates()) {
-			final ConnectionGene c = gates.get(id);
+			final ConnectionGene c = getConnection(id);
 			c.setGain(0);
 		}
 
@@ -545,10 +545,6 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		return MapUtils.highestKey(connections);
 	}
 
-	public int highestGaterID() {
-		return MapUtils.highestKey(gates);
-	}
-
 	public int highestSelfID() {
 		return MapUtils.highestKey(selfs);
 	}
@@ -589,10 +585,6 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		return connections.get(id);
 	}
 
-	public ConnectionGene getGate(final int id) {
-		return gates.get(id);
-	}
-
 	public ConnectionGene getSelf(final int id) {
 		return selfs.get(id);
 	}
@@ -601,7 +593,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		return connections;
 	}
 
-	public Map<Integer, ConnectionGene> getGates() {
+	public Map<ConnectionGene, Integer> getGates() {
 		return gates;
 	}
 

@@ -38,11 +38,6 @@ public class NodeGene extends Gene {
 	private double activation;
 
 	/**
-	 * Last derivative value
-	 */
-	private double derivative;
-
-	/**
 	 * Current state
 	 */
 	private double state;
@@ -80,7 +75,6 @@ public class NodeGene extends Gene {
 
 	public void activate() {
 		activation = squash.activate(state, false);
-		derivative = squash.activate(state, true);
 	}
 
 	public void mutate(final Mutation method) {
