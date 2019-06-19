@@ -1,6 +1,7 @@
 package de.kjosu.jnstinct.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -53,5 +54,19 @@ public class MapUtils {
 		}
 
 		return highest;
+	}
+
+	public static <T> Map<T, T> mergeKeys(final Map<T, ?> map1, final Map<T, ?> map2) {
+		final Map<T, T> output = new HashMap<>();
+
+		for (final T i : map1.keySet()) {
+			output.put(i, i);
+		}
+
+		for (final T i : map2.keySet()) {
+			output.put(i, i);
+		}
+
+		return output;
 	}
 }
