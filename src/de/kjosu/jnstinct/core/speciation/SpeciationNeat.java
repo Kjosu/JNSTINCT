@@ -87,6 +87,8 @@ public abstract class SpeciationNeat<T extends Genome<T>> extends Neat<T> {
             s.evolve();
         }
 
+        relations.clear();
+
         for (final T genome : population) {
             Species<T> chosen = null;
 
@@ -106,6 +108,13 @@ public abstract class SpeciationNeat<T extends Genome<T>> extends Neat<T> {
             }
 
             relations.put(genome, chosen);
+        }
+
+        final Iterator<Species<T>> iterator = species.iterator();
+        while (iterator.hasNext()) {
+        	if (iterator.next().getMembers().isEmpty()) {
+        		iterator.remove();
+        	}
         }
     }
 
@@ -142,6 +151,7 @@ public abstract class SpeciationNeat<T extends Genome<T>> extends Neat<T> {
 	        }
         } else {
 	        double excess = 0;
+
 	        for (final Species<T> s : species) {
 	            final double rawOffspringSize = s.getAdjustedFitnessSum() / sum * maxOffsprings;
 	            int offspringSize = (int) rawOffspringSize;
@@ -160,15 +170,8 @@ public abstract class SpeciationNeat<T extends Genome<T>> extends Neat<T> {
 
     private List<T> breed() {
         final List<T> nextGeneration = new Stack<>();
-        final Iterator<Species<T>> iterator = species.iterator();
 
-    	while (iterator.hasNext()) {
-    		final Species<T> s = iterator.next();
-
-    		if (s.getMembers().isEmpty()) {
-    			iterator.remove();
-    		}
-
+    	for (final Species<T> s : species) {
             s.eliminateLowest();
 
             for (int i = 0; i < s.getOffspringSize(); i++) {

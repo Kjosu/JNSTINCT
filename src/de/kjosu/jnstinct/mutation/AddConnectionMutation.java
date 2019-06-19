@@ -33,7 +33,7 @@ public class AddConnectionMutation implements Mutation {
 					continue;
 				}
 
-				if (!g.isProjectingTo(node1, node2)) {
+				if (g.isProjectingTo(node1, node2) == -1) {
 					available.add(new Pair<>(node1, node2));
 				}
 			}
