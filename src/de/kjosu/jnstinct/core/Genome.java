@@ -91,7 +91,15 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			size = mother.highestNodeID();
 		}
 
-		for (int i = 0; i <= size; i++) {
+		final Map<Integer, Integer> nodeIds = MapUtils.mergeKeys(father.getNodes(), mother.getNodes());
+		final Map<Integer, Integer> connectionIds = MapUtils.mergeKeys(father.getConnections(), mother.getConnections());
+		final Map<Integer, Integer> selfConnectionIds = MapUtils.mergeKeys(father.getSelfs(), mother.getSelfs());
+
+		for (final int i : nodeIds.keySet()) {
+			if (i > size) {
+				continue;
+			}
+
 			final NodeGene node1 = father.getNode(i);
 			final NodeGene node2 = mother.getNode(i);
 
@@ -115,10 +123,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			getNodes().put(node.getId(), node);
 		}
 
-		final int cSize1 = father.highestConnectionID();
-		final int cSize2 = mother.highestConnectionID();
-
-		for (int i = 0; i <= cSize1 || i <= cSize2; i++) {
+		for (final int i : connectionIds.keySet()) {
 			final ConnectionGene c1 = father.getConnection(i);
 			final ConnectionGene c2 = mother.getConnection(i);
 
@@ -143,10 +148,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			}
 		}
 
-		final int sSize1 = father.highestSelfID();
-		final int sSize2 = mother.highestSelfID();
-
-		for (int i = 0; i <= sSize1 || i <= sSize2; i++) {
+		for (final int i : selfConnectionIds.keySet()) {
 			final ConnectionGene c1 = father.getSelf(i);
 			final ConnectionGene c2 = father.getSelf(i);
 
@@ -270,7 +272,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			} else {
 				c = selfs.get(fromNode.getSelf());
 			}
-		} else if (!isProjectingTo(fromNode, toNode)) {
+		} else if ((c = getConnection(isProjectingTo(fromNode, toNode))) == null) {
 			c = new ConnectionGene(fromNode.getId(), toNode.getId(), weight);
 			toNode.addIncoming(c.getId());
 			fromNode.addOutgoing(c.getId());
@@ -329,7 +331,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 
 	public void gate(final NodeGene node, final ConnectionGene connection) {
 		if (connection.getGaterNode() != -1) {
-			throw new IllegalStateException("Connection is already gated");
+			return;
 		}
 
 		node.addGate(connection.getId());
@@ -404,7 +406,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		final List<ConnectionGene> connections = new Stack<>();
 		for (final int input : inputNodes) {
 			for (final int output : outputNodes) {
-				if (isProjectingTo(input, output)) {
+				if (isProjectingTo(input, output) != -1) {
 					continue;
 				}
 
@@ -465,17 +467,17 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		node.clear();
 	}
 
-	public boolean isProjectingTo(final int sourceNode, final int targetNode) {
+	public int isProjectingTo(final int sourceNode, final int targetNode) {
 		return isProjectingTo(nodes.get(sourceNode), nodes.get(targetNode));
 	}
 
-	public boolean isProjectingTo(final NodeGene sourceNode, final NodeGene targetNode) {
+	public int isProjectingTo(final NodeGene sourceNode, final NodeGene targetNode) {
 		if (sourceNode == null || targetNode == null) {
 			throw new IllegalArgumentException("Source/Target node can't be null");
 		}
 
 		if (sourceNode.equals(targetNode)) {
-			return sourceNode.getSelf() != -1;
+			return sourceNode.getSelf();
 		}
 
 		final Iterator<Integer> iterator = sourceNode.getOutgoing().iterator();
@@ -486,35 +488,39 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			if (c == null) {
 				iterator.remove();
 			} else if (c.getToNode() == targetNode.getId()) {
-				return true;
+				return c.getId();
 			}
 		}
 
-		return false;
+		return -1;
 	}
 
-	public boolean isProjectedBy(final int sourceNode, final int targetNode) {
+	public int isProjectedBy(final int sourceNode, final int targetNode) {
 		return isProjectedBy(nodes.get(sourceNode), nodes.get(targetNode));
 	}
 
-	public boolean isProjectedBy(final NodeGene sourceNode, final NodeGene targetNode) {
+	public int isProjectedBy(final NodeGene sourceNode, final NodeGene targetNode) {
 		if (sourceNode == null || targetNode == null) {
 			throw new IllegalArgumentException("Source/Target node can't be null");
 		}
 
 		if (sourceNode.equals(targetNode)) {
-			return sourceNode.getSelf() != -1;
+			return sourceNode.getSelf();
 		}
 
-		for (final int id : sourceNode.getIncoming()) {
-			final ConnectionGene c = connections.get(id);
+		final Iterator<Integer> iterator = sourceNode.getIncoming().iterator();
 
-			if (c.getFromNode() == targetNode.getId()) {
-				return true;
+		while (iterator.hasNext()) {
+			final ConnectionGene c = getConnection(iterator.next());
+
+			if (c == null) {
+				iterator.remove();
+			} else if (c.getFromNode() == targetNode.getId()) {
+				return c.getId();
 			}
 		}
 
-		return false;
+		return -1;
 	}
 
 	public NodeGene createNode() {
