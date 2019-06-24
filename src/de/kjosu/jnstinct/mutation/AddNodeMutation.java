@@ -17,7 +17,7 @@ public class AddNodeMutation implements Mutation {
 		final ConnectionGene connection = MapUtils.randomValue(g.getConnections());
 		final int gater = connection.getGaterNode();
 
-		g.disconnect(connection.getFromNode(), connection.getToNode(), false);
+		g.disconnect(connection.getFromNode(), connection.getToNode(), true);
 
 		final NodeGene node = g.createNode(connection.getId() + g.getInputSize() + g.getOutputSize());
 		node.mutate(neat.modifySquash);

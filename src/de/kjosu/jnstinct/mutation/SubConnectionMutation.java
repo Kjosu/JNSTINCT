@@ -33,7 +33,7 @@ public class SubConnectionMutation implements Mutation {
 
 		final ConnectionGene c = possible.get(random.nextInt(possible.size()));
 
-		g.disconnect(c.getFromNode(), c.getToNode(), false);
+		g.disconnect(c.getFromNode(), c.getToNode(), true);
 	}
 
 }

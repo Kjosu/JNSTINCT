@@ -14,7 +14,7 @@ public class SubSelfConnectionMutation implements Mutation {
 		}
 
 		final ConnectionGene c = MapUtils.randomValue(g.getSelfs());
-		g.disconnect(c.getFromNode(), c.getToNode(), false);
+		g.disconnect(c.getFromNode(), c.getToNode(), true);
 	}
 
 }

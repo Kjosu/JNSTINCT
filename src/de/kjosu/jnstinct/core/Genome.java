@@ -263,7 +263,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			throw new IllegalArgumentException("From/To node can't be null");
 		}
 
-		ConnectionGene c = null;
+		ConnectionGene c;
 
 		if (fromNode.equals(toNode)) {
 			if (fromNode.getSelf() == -1) {
