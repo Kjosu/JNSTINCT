@@ -10,19 +10,7 @@ import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
 import de.kjosu.jnstinct.core.NodeGene.NodeType;
-import de.kjosu.jnstinct.mutation.AddConnectionMutation;
-import de.kjosu.jnstinct.mutation.AddGateMutation;
-import de.kjosu.jnstinct.mutation.AddNodeMutation;
-import de.kjosu.jnstinct.mutation.AddSelfConnectionMutation;
-import de.kjosu.jnstinct.mutation.ModifyBiasMutation;
-import de.kjosu.jnstinct.mutation.ModifySquashMutation;
-import de.kjosu.jnstinct.mutation.ModifyWeightMutation;
-import de.kjosu.jnstinct.mutation.Mutation;
-import de.kjosu.jnstinct.mutation.SubConnectionMutation;
-import de.kjosu.jnstinct.mutation.SubGateMutation;
-import de.kjosu.jnstinct.mutation.SubNodeMutation;
-import de.kjosu.jnstinct.mutation.SubSelfConnectionMutation;
-import de.kjosu.jnstinct.mutation.SwapNodesMutation;
+import de.kjosu.jnstinct.mutation.*;
 import de.kjosu.jnstinct.selection.FitnessProportionateSelection;
 import de.kjosu.jnstinct.selection.Selection;
 
@@ -42,6 +30,7 @@ public abstract class Neat<T extends Genome<T>> {
 	public final SubNodeMutation subNode = new SubNodeMutation();
 	public final SubSelfConnectionMutation subSelfConnection = new SubSelfConnectionMutation();
 	public final SwapNodesMutation swapNodes = new SwapNodesMutation();
+	public final ToggleConnectionMutation toggleConnection = new ToggleConnectionMutation();
 
 	public List<Mutation> mutations = new ArrayList<>(Arrays.asList(new Mutation[] {
 		addNode,
@@ -55,7 +44,8 @@ public abstract class Neat<T extends Genome<T>> {
 		modifyWeight,
 		modifyBias,
 		modifySquash,
-		swapNodes
+		swapNodes,
+		toggleConnection
 	}));
 
 	public Selection selection = new FitnessProportionateSelection();
