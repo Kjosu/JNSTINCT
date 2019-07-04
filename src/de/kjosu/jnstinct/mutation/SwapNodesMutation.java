@@ -11,10 +11,10 @@ public class SwapNodesMutation implements Mutation {
 	public boolean mutateOutput = true;
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		if ((mutateOutput && g.getNodeSize() - g.getInputSize() < 2) ||
 				(!mutateOutput && g.getNodeSize() - g.getInputSize() - g.getOutputSize() < 2)) {
-			return;
+			return false;
 		}
 
 		final int origin = g.getInputSize() + ((mutateOutput) ? 0 : g.getOutputSize());
@@ -30,6 +30,8 @@ public class SwapNodesMutation implements Mutation {
 		node1.setSquash(node2.getSquash());
 		node2.setBias(biasTemp);
 		node2.setSquash(squashTemp);
+
+		return true;
 	}
 
 }

@@ -9,9 +9,9 @@ import de.kjosu.jnstinct.util.MapUtils;
 public class AddNodeMutation implements Mutation {
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		if (g.getConnections().isEmpty()) {
-			return;
+			return false;
 		}
 
 		final ConnectionGene connection = MapUtils.randomValue(g.getConnections());
@@ -28,6 +28,8 @@ public class AddNodeMutation implements Mutation {
 		if (gater != -1) {
 			g.gate(gater, (random.nextBoolean()) ? newConn1 : newConn2);
 		}
+
+		return true;
 	}
 
 }

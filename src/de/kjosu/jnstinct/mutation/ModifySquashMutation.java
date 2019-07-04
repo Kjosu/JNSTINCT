@@ -12,9 +12,9 @@ public class ModifySquashMutation implements Mutation {
 	public Squash[] allowed = Squash.values();
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		if (!mutateOutput && g.getHiddenSize() < 1) {
-			return;
+			return false;
 		}
 
 		final int origin = g.getInputSize() + ((mutateOutput) ? g.getOutputSize() : 0);
@@ -22,6 +22,8 @@ public class ModifySquashMutation implements Mutation {
 
 		final NodeGene node = MapUtils.randomValue(g.getNodes(), origin, bound);
 		node.mutate(this);
+
+		return true;
 	}
 
 }

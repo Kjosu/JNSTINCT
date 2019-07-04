@@ -13,19 +13,21 @@ public class ModifyWeightMutation implements Mutation {
 	public double max = 1;
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		final List<ConnectionGene> allConnections = new Stack<>();
 		allConnections.addAll(g.getConnections().values());
 		allConnections.addAll(g.getSelfs().values());
 
 		if (allConnections.isEmpty()) {
-			return;
+			return false;
 		}
 
 		final ConnectionGene c = allConnections.get(random.nextInt(allConnections.size()));
 		final double mod = random.nextDouble(min, max);
 
 		c.setWeight(c.getWeight() + mod);
+
+		return true;
 	}
 
 }

@@ -11,7 +11,7 @@ import de.kjosu.jnstinct.util.Pair;
 public class AddConnectionMutation implements Mutation {
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		final List<Pair<NodeGene, NodeGene>> available = new Stack<>();
 		final int highest = g.highestNodeID();
 
@@ -40,12 +40,12 @@ public class AddConnectionMutation implements Mutation {
 		}
 
 		if (available.isEmpty()) {
-			return;
+			return false;
 		}
 
 		final Pair<NodeGene, NodeGene> pair = available.get(random.nextInt(available.size()));
 
-		g.connect(pair.getKey(), pair.getValue(), 0);
+		return g.connect(pair.getKey(), pair.getValue(), 0) != null;
 	}
 
 }

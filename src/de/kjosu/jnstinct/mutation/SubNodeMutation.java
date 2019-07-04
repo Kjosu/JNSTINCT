@@ -10,9 +10,9 @@ public class SubNodeMutation implements Mutation {
 	public boolean keepGates = true;
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		if (g.getHiddenSize() < 1) {
-			return;
+			return false;
 		}
 
 		final int origin = g.getInputSize() + g.getOutputSize();
@@ -20,6 +20,8 @@ public class SubNodeMutation implements Mutation {
 
 		final NodeGene node = MapUtils.randomValue(g.getNodes(), origin, bound);
 		g.removeNode(node);
+
+		return true;
 	}
 
 }

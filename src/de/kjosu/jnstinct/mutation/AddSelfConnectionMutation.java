@@ -10,7 +10,7 @@ import de.kjosu.jnstinct.core.NodeGene;
 public class AddSelfConnectionMutation implements Mutation {
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		final List<NodeGene> possible = new Stack<>();
 		final int highest = g.highestNodeID();
 
@@ -27,12 +27,12 @@ public class AddSelfConnectionMutation implements Mutation {
 		}
 
 		if (possible.isEmpty()) {
-			return;
+			return false;
 		}
 
 		final NodeGene node = possible.get(random.nextInt(possible.size()));
 
-		g.connect(node, node, 0);
+		return g.connect(node, node, 0) != null;
 	}
 
 }

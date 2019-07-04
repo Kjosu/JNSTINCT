@@ -8,13 +8,13 @@ import de.kjosu.jnstinct.util.MapUtils;
 public class SubGateMutation implements Mutation {
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		if (g.getGates().isEmpty()) {
-			return;
+			return false;
 		}
 
 		final ConnectionGene c = MapUtils.randomKey(g.getGates());
-		g.ungate(c);
+		return g.ungate(c);
 	}
 
 }

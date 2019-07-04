@@ -7,8 +7,8 @@ import de.kjosu.jnstinct.core.Neat;
 
 public interface Mutation {
 
-	final ThreadLocalRandom random = ThreadLocalRandom.current();
+	ThreadLocalRandom random = ThreadLocalRandom.current();
 
-	public <T extends Genome<T>> void mutate(Neat<T> neat, T g);
+	 <T extends Genome<T>> boolean mutate(Neat<T> neat, T g);
 
 }

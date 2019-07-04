@@ -8,13 +8,15 @@ import de.kjosu.jnstinct.util.MapUtils;
 public class SubSelfConnectionMutation implements Mutation {
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		if (g.getSelfs().isEmpty()) {
-			return;
+			return false;
 		}
 
 		final ConnectionGene c = MapUtils.randomValue(g.getSelfs());
 		g.disconnect(c.getFromNode(), c.getToNode(), true);
+
+		return true;
 	}
 
 }

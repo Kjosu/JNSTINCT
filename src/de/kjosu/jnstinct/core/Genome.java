@@ -325,28 +325,29 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		}
 	}
 
-	public void gate(final int node, final ConnectionGene connection) {
-		gate(nodes.get(node), connection);
+	public boolean gate(final int node, final ConnectionGene connection) {
+		return gate(nodes.get(node), connection);
 	}
 
-	public void gate(final NodeGene node, final ConnectionGene connection) {
+	public boolean gate(final NodeGene node, final ConnectionGene connection) {
 		if (connection.getGaterNode() != -1) {
-			return;
+			return false;
 		}
 
 		node.addGate(connection.getId());
 		connection.setGaterNode(node.getId());
 
 		gates.put(connection, node.getId());
+		return true;
 	}
 
-	public void ungate(final ConnectionGene c) {
+	public boolean ungate(final ConnectionGene c) {
 		if (c == null) {
 			throw new IllegalArgumentException("Connection can't be null");
 		}
 
 		if (c.getGaterNode() == -1) {
-			return;
+			return false;
 		}
 
 		final NodeGene node = nodes.get(c.getGaterNode());
@@ -360,6 +361,8 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		c.setGain(1);
 
 		gates.remove(c);
+
+		return true;
 	}
 
 	public void removeNode(final int id) {
@@ -436,12 +439,12 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		nodes.remove(node.getId());
 	}
 
-	public void mutate(final Mutation method) {
+	public boolean mutate(final Mutation method) {
 		if (method == null) {
 			throw new IllegalArgumentException("Mutation method can't be null");
 		}
 
-		method.mutate(neat, (T) this);
+		return method.mutate(neat, (T) this);
 	}
 
 	public void clear() {

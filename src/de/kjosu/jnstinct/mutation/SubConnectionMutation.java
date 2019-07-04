@@ -11,9 +11,9 @@ import de.kjosu.jnstinct.core.NodeGene;
 public class SubConnectionMutation implements Mutation {
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		if (g.getConnections().size() <= 1) {
-			return;
+			return false;
 		}
 
 		final List<ConnectionGene> possible = new Stack<>();
@@ -28,12 +28,14 @@ public class SubConnectionMutation implements Mutation {
 		}
 
 		if (possible.isEmpty()) {
-			return;
+			return false;
 		}
 
 		final ConnectionGene c = possible.get(random.nextInt(possible.size()));
 
 		g.disconnect(c.getFromNode(), c.getToNode(), true);
+
+		return true;
 	}
 
 }

@@ -12,7 +12,7 @@ import de.kjosu.jnstinct.util.MapUtils;
 public class AddGateMutation implements Mutation {
 
 	@Override
-	public <T extends Genome<T>> void mutate(final Neat<T> neat, final T g) {
+	public <T extends Genome<T>> boolean mutate(final Neat<T> neat, final T g) {
 		final List<ConnectionGene> allConnections = new Stack<>();
 		allConnections.addAll(g.getConnections().values());
 		allConnections.addAll(g.getSelfs().values());
@@ -25,13 +25,13 @@ public class AddGateMutation implements Mutation {
 		}
 
 		if (possible.isEmpty()) {
-			return;
+			return false;
 		}
 
 		final NodeGene node = MapUtils.randomValue(g.getNodes());
 		final ConnectionGene c = possible.get(random.nextInt(possible.size()));
 
-		g.gate(node, c);
+		return g.gate(node, c);
 	}
 
 }
