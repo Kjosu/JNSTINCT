@@ -9,8 +9,9 @@ Easy to use for nearly every purpose.
 - Custom evolve function
 - Custom mutations
 - Custom selection algorithms
+- Save/Load genomes
 
-## Libraries used
+## LIBRARIES
 
 - Jackson
 
@@ -90,7 +91,7 @@ public static void main(String[] args) {
 }
 ```
 
-## Network settings
+## NETWORK SETTINGS
 
 ```java
 Neat.mutations.addAll(      // Allowed Mutations
@@ -177,4 +178,17 @@ class CustomSelection implements Selection {
 
 
 Neat.selection = new CustomSelection();
+```
+
+## SAVE/LOAD GENOMES
+
+```java
+// Save Genome
+GenomeLoader.save(genome, fileName);
+
+// Load Genome
+XORGenome genome = GenomeLoader.load(neat, fileName);
+
+// Add loaded genome to the network
+neat.getPopulation().set(0, genome);
 ```
