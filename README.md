@@ -10,6 +10,10 @@ Easy to use for nearly every purpose.
 - Custom mutations
 - Custom selection algorithms
 
+## Libraries used
+
+- Jackson
+
 ## USAGE
 
 1. Create your Genome instance (You need both constructors)
