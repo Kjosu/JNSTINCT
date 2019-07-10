@@ -174,6 +174,10 @@ public abstract class Neat<T extends Genome<T>> {
 		return (node == null) ? createNode() : node;
 	}
 
+	public void registerNode(NodeGene node) {
+		globalNodes.put(node.getId(), node);
+	}
+
 	public void sort() {
 		Collections.sort(population);
 	}

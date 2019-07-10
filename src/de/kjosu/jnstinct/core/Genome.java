@@ -127,7 +127,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			final ConnectionGene c1 = father.getConnection(i);
 			final ConnectionGene c2 = mother.getConnection(i);
 
-			ConnectionGene chosen = null;
+			ConnectionGene chosen;
 			if (Objects.equals(c1, c2)) {
 				chosen = (random.nextBoolean()) ? c1 : c2;
 			} else if ((equal || fitness1 >= fitness2) && c1 != null) {
@@ -150,9 +150,9 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 
 		for (final int i : selfConnectionIds.keySet()) {
 			final ConnectionGene c1 = father.getSelf(i);
-			final ConnectionGene c2 = father.getSelf(i);
+			final ConnectionGene c2 = mother.getSelf(i);
 
-			ConnectionGene chosen = null;
+			ConnectionGene chosen;
 			if (Objects.equals(c1, c2)) {
 				chosen = (random.nextBoolean()) ? c1 : c2;
 			} else if ((equal || fitness1 >= fitness2) && c1 != null) {
