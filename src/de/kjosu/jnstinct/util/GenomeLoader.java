@@ -102,28 +102,56 @@ public class GenomeLoader {
             }
         }
 
+        public GenomeStaff() {
+
+        }
+
         public int getInputSize() {
             return inputSize;
+        }
+
+        public void setInputSize(int inputSize) {
+            this.inputSize = inputSize;
         }
 
         public int getOutputSize() {
             return outputSize;
         }
 
+        public void setOutputSize(int outputSize) {
+            this.outputSize = outputSize;
+        }
+
         public List<NodeStaff> getNodeStaffs() {
             return nodeStaffs;
+        }
+
+        public void setNodeStaffs(List<NodeStaff> nodeStaffs) {
+            this.nodeStaffs = nodeStaffs;
         }
 
         public List<ConnectionStaff> getConnectionStaffs() {
             return connectionStaffs;
         }
 
+        public void setConnectionStaffs(List<ConnectionStaff> connectionStaffs) {
+            this.connectionStaffs = connectionStaffs;
+        }
+
         public List<GateStaff> getGateStaffs() {
             return gateStaffs;
         }
 
+        public void setGateStaffs(List<GateStaff> gateStaffs) {
+            this.gateStaffs = gateStaffs;
+        }
+
         public List<ConnectionStaff> getSelfStaffs() {
             return selfStaffs;
+        }
+
+        public void setSelfStaffs(List<ConnectionStaff> selfStaffs) {
+            this.selfStaffs = selfStaffs;
         }
     }
 
@@ -147,32 +175,64 @@ public class GenomeLoader {
             old = node.getOld();
         }
 
+        public NodeStaff() {
+
+        }
+
         public int getId() {
             return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
         }
 
         public double getBias() {
             return bias;
         }
 
+        public void setBias(double bias) {
+            this.bias = bias;
+        }
+
         public Squash getSquash() {
             return squash;
+        }
+
+        public void setSquash(Squash squash) {
+            this.squash = squash;
         }
 
         public NodeGene.NodeType getType() {
             return type;
         }
 
+        public void setType(NodeGene.NodeType type) {
+            this.type = type;
+        }
+
         public double getActivation() {
             return activation;
+        }
+
+        public void setActivation(double activation) {
+            this.activation = activation;
         }
 
         public double getState() {
             return state;
         }
 
+        public void setState(double state) {
+            this.state = state;
+        }
+
         public double getOld() {
             return old;
+        }
+
+        public void setOld(double old) {
+            this.old = old;
         }
     }
 
@@ -192,24 +252,48 @@ public class GenomeLoader {
             enabled = c.isEnabled();
         }
 
+        public ConnectionStaff() {
+
+        }
+
         public int getFromNode() {
             return fromNode;
+        }
+
+        public void setFromNode(int fromNode) {
+            this.fromNode = fromNode;
         }
 
         public int getToNode() {
             return toNode;
         }
 
+        public void setToNode(int toNode) {
+            this.toNode = toNode;
+        }
+
         public double getGain() {
             return gain;
+        }
+
+        public void setGain(double gain) {
+            this.gain = gain;
         }
 
         public double getWeight() {
             return weight;
         }
 
+        public void setWeight(double weight) {
+            this.weight = weight;
+        }
+
         public boolean isEnabled() {
             return enabled;
+        }
+
+        public void setEnabled(boolean enabled) {
+            this.enabled = enabled;
         }
     }
 
@@ -223,12 +307,24 @@ public class GenomeLoader {
             this.nodeID = nodeID;
         }
 
+        public GateStaff() {
+
+        }
+
         public int getConnectionID() {
             return connectionID;
         }
 
+        public void setConnectionID(int connectionID) {
+            this.connectionID = connectionID;
+        }
+
         public int getNodeID() {
             return nodeID;
+        }
+
+        public void setNodeID(int nodeID) {
+            this.nodeID = nodeID;
         }
     }
 }
