@@ -20,23 +20,31 @@ public class GenomeLoader {
     }
 
     public static <T extends Genome<T>> void save(T genome, String fileName) throws IOException {
-        if (genome == null || fileName == null) {
+        save(genome, new File(fileName));
+    }
+
+    public static <T extends Genome<T>> void save(T genome, File file) throws IOException {
+        if (genome == null || file == null) {
             throw new IllegalArgumentException();
         }
 
         GenomeStaff staff = new GenomeStaff(genome);
         ObjectMapper mapper = new ObjectMapper();
 
-        mapper.writeValue(new File(fileName), staff);
+        mapper.writeValue(file, staff);
     }
 
     public static <T extends Genome<T>> T load(Neat<T> neat, String fileName) throws IOException {
-        if (neat == null || fileName == null) {
+        return load(neat, new File(fileName));
+    }
+
+    public static <T extends Genome<T>> T load(Neat<T> neat, File file) throws IOException {
+        if (neat == null || file == null || !file.exists()) {
             throw new IllegalArgumentException();
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        GenomeStaff staff = mapper.readValue(new File(fileName), GenomeStaff.class);
+        GenomeStaff staff = mapper.readValue(file, GenomeStaff.class);
 
         T genome = neat.createGenome(neat, staff.getInputSize(), staff.getOutputSize(), false);
 

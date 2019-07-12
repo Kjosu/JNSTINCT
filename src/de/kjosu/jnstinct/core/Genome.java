@@ -638,4 +638,9 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 			return -1;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Genome (%.2f)", fitness);
+	}
 }
