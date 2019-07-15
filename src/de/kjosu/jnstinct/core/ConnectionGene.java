@@ -112,6 +112,11 @@ public class ConnectionGene extends Gene {
 		return clone;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Connection %s [%s -> %s]", id, fromNode, toNode);
+	}
+
 	/**
 	 * Creates a unique id with the following pairing function:<br/>
 	 * <br/>

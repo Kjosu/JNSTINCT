@@ -210,4 +210,8 @@ public class NodeGene extends Gene {
 		return clone;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Node %s", id);
+	}
 }
