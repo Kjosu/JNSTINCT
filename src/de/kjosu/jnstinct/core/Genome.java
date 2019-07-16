@@ -268,6 +268,7 @@ public abstract class Genome<T extends Genome<T>> implements Comparable<T> {
 		if (fromNode.equals(toNode)) {
 			if (fromNode.getSelf() == -1) {
 				c = new ConnectionGene(fromNode.getId(), toNode.getId(), weight);
+				fromNode.setSelf(c.getId());
 				selfs.put(c.getId(), c);
 			} else {
 				c = selfs.get(fromNode.getSelf());
