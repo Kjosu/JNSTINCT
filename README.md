@@ -61,9 +61,11 @@ class XORNeat extends SpeciationNeat<XORGenome> {
     
     for (int i = 0; i < 2; i++) {
       for (int j = 0; j < 2; j++) {
+        double[] input = new double[] { i, j };
+        double[] output = genome.activate(input);
+        
         double expected = i ^ j;
-        double output = genome.activate(new double[] { i, j })[0];
-        double result = output - expected;
+        double result = output[0] - expected;
         
         fitness -= result * result;
       }
