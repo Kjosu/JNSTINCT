@@ -79,10 +79,11 @@ class XORNeat extends SpeciationNeat<XORGenome> {
 4. Setup your network and evolve it
 
 ```java
+private static final int populationSize = 100;
 private static final int generations = 1000;
 
 public static void main(String[] args) {
-  XORNeat neat = new XORNeat(100);
+  XORNeat neat = new XORNeat(populationSize);
   
   for (int i = 0; i < generations; i++) {
     neat.evolve();
