@@ -15,7 +15,7 @@ Easy to use for nearly every purpose.
 
 - Jackson
 
-## USAGE
+## USAGE (XOR Example)
 
 1. Create your Genome instance (You need both constructors)
 
